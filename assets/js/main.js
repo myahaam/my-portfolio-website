@@ -229,13 +229,33 @@
 })();
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  const progressBars = document.querySelectorAll(".progress-bar");
+/**
+ * Animate the skills items on reveal (no Waypoints required)
+ */
+function initSkillBars() {
+  const skillsSection = document.getElementById('skills');
+  if (!skillsSection) return;
 
-  function animateProgressBars() {
-    progressBars.forEach(bar => {
-      const value = bar.getAttribute("aria-valuenow");
-      bar.style.width = value + "%";
+  const bars = skillsSection.querySelectorAll('.progress .progress-bar');
+
+  const fill = () => {
+    bars.forEach((bar, i) => {
+      const value = parseInt(bar.getAttribute('aria-valuenow') || '0', 10);
+      // optional: stagger for a nicer effect
+      setTimeout(() => { bar.style.width = value + '%'; }, i * 150);
     });
-  }
+  };
 
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        fill();
+        obs.disconnect(); // run once
+      }
+    });
+  }, { threshold: 0.3 });
+
+  io.observe(skillsSection);
+}
+
+window.addEventListener('load', initSkillBars);
