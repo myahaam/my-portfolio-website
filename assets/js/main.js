@@ -239,16 +239,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Animate when skills section is visible
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateProgressBars();
-        observer.disconnect(); // Run only once
-      }
-    });
-  }, { threshold: 0.3 });
-
-  const skillsSection = document.querySelector("#skills");
-  if (skillsSection) observer.observe(skillsSection);
-});
