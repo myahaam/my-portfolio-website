@@ -1,7 +1,7 @@
 /**
 * Template Name: SnapFolio
 * Template URL: https://bootstrapmade.com/snapfolio-bootstrap-portfolio-template/
-* Updated: Jun 13 2025 with Bootstrap v5.3.6
+* Updated: Jul 21 2025 with Bootstrap v5.3.7
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
@@ -227,35 +227,3 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
 })();
-
-
-/**
- * Animate the skills items on reveal (no Waypoints required)
- */
-function initSkillBars() {
-  const skillsSection = document.getElementById('skills');
-  if (!skillsSection) return;
-
-  const bars = skillsSection.querySelectorAll('.progress .progress-bar');
-
-  const fill = () => {
-    bars.forEach((bar, i) => {
-      const value = parseInt(bar.getAttribute('aria-valuenow') || '0', 10);
-      // optional: stagger for a nicer effect
-      setTimeout(() => { bar.style.width = value + '%'; }, i * 150);
-    });
-  };
-
-  const io = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        fill();
-        obs.disconnect(); // run once
-      }
-    });
-  }, { threshold: 0.3 });
-
-  io.observe(skillsSection);
-}
-
-window.addEventListener('load', initSkillBars);
