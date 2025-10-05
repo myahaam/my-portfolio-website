@@ -227,3 +227,28 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
 })();
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const progressBars = document.querySelectorAll(".progress-bar");
+
+  function animateProgressBars() {
+    progressBars.forEach(bar => {
+      const value = bar.getAttribute("aria-valuenow");
+      bar.style.width = value + "%";
+    });
+  }
+
+  // Animate when skills section is visible
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateProgressBars();
+        observer.disconnect(); // Run only once
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const skillsSection = document.querySelector("#skills");
+  if (skillsSection) observer.observe(skillsSection);
+});
